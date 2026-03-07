@@ -12,12 +12,20 @@ import {
   Alert,
   Group,
 } from '@mantine/core'
-import { IconSend, IconAlertCircle, IconTrash, IconCopy, IconFileTypeDocx } from '@tabler/icons-react'
+import { IconSend, IconAlertCircle, IconTrash, IconCopy, IconFileTypeDocx, IconBulb } from '@tabler/icons-react'
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from 'docx'
 import { saveAs } from 'file-saver'
 import { processQuestionnaire, type QuestionnaireItem, type Citation } from './api'
 
 const STORAGE_KEY = 'security-questionnaire-assistant-results'
+
+const COMMON_QUESTIONS = [
+  'What is our password policy?',
+  'How do we handle data encryption?',
+  'What are incident response procedures?',
+  'How do we manage access control?',
+  'What is our backup and recovery process?',
+]
 
 function loadStoredResults(): QuestionnaireItem[] | null {
   try {
@@ -141,6 +149,17 @@ export function Questionnaire() {
     setTimeout(() => setCopiedId(null), 2000)
   }
 
+  const addQuestion = (q: string) => {
+    setQuestionsText((prev) => (prev.trim() ? `${prev.trim()}\n${q}` : q))
+  }
+  const addAllCommonQuestions = () => {
+    setQuestionsText((prev) => {
+      const current = prev.trim()
+      const added = COMMON_QUESTIONS.join('\n')
+      return current ? `${current}\n${added}` : added
+    })
+  }
+
   return (
     <Box maw={900} mx="auto" py="md">
       <Title order={3} mb="md" c="dark.7">Security questionnaire</Title>
@@ -157,11 +176,34 @@ export function Questionnaire() {
       <Paper p="md" radius="md" withBorder mb="lg">
         <Text fw={600} size="sm" mb="xs">Questions</Text>
         <Textarea
-          placeholder="Paste questions here, one per line..."
-          minRows={6}
+          placeholder="Your questions here (one per line). Paste or click suggestions below to add."
+          minRows={5}
           value={questionsText}
           onChange={(e) => setQuestionsText(e.currentTarget.value)}
         />
+        <Stack gap="xs" mt="md">
+          <Group gap="xs">
+            <IconBulb size={18} style={{ color: 'var(--mantine-color-yellow-6)' }} />
+            <Text size="sm" fw={500}>Common questions:</Text>
+          </Group>
+          <Text size="xs" c="dimmed">Click any question to add to your list.</Text>
+          <Group gap="xs" wrap="wrap">
+            {COMMON_QUESTIONS.map((q) => (
+              <Button
+                key={q}
+                variant="light"
+                size="xs"
+                onClick={() => addQuestion(q)}
+                style={{ whiteSpace: 'normal', height: 'auto', padding: '6px 12px' }}
+              >
+                {q}
+              </Button>
+            ))}
+            <Button variant="subtle" size="xs" onClick={addAllCommonQuestions}>
+              Add all
+            </Button>
+          </Group>
+        </Stack>
         <Group mt="md">
           <Button
             leftSection={<IconSend size={16} />}
