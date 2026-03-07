@@ -61,9 +61,15 @@ Open http://localhost:5173. The dev server proxies `/api` to the backend.
 
 ## Documentation
 
-- **[How the RAG pipeline works](docs/RAG-OVERVIEW.md)** – ingestion (chunking, embeddings), retrieval (similarity search), and generation (Claude + citations). For the curious.
+- **[Architecture](docs/ARCHITECTURE.md)** – Backend vs frontend, API routes, how they connect, folder layout.
+- **[Data flow](docs/DATA-FLOW.md)** – Where uploads and the index live, localStorage for questionnaire results, what is sent to Claude.
+- **[How the RAG pipeline works](docs/RAG-OVERVIEW.md)** – Ingestion (chunking, embeddings), retrieval (similarity search), and generation (Claude + citations).
 
 ## Data & privacy
 
 - Uploaded files and the embedding index are stored under `backend/data/` (local only).
 - Embeddings are computed locally (sentence-transformers). Only the **question** and **retrieved policy excerpts** are sent to Claude when generating answers.
+
+---
+
+**MVP v1** – Feature set and docs (architecture, data flow, RAG) are complete. Future updates will build on this base.
