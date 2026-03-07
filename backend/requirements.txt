@@ -1,0 +1,18 @@
+# Security Questionnaire Assistant - Backend
+# Python 3.10+
+
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-multipart==0.0.17
+pydantic-settings==2.6.1
+
+# Document parsing
+pymupdf==1.25.1
+python-docx==1.1.2
+
+# Local embeddings (no cloud; data stays local)
+sentence-transformers==3.3.1
+numpy==2.2.6
+
+# Claude API for answer generation only (0.45.2+ fixes httpx 'proxies' compatibility)
+anthropic>=0.45.2
