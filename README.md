@@ -57,7 +57,11 @@ Open http://localhost:5173. The dev server proxies `/api` to the backend.
 ## Usage
 
 1. **Documents:** Upload PDF or DOCX policy files, then click **Index** for each. Indexed documents are used for RAG.
-2. **Questionnaire:** Paste questions (one per line), click **Generate draft answers**. Each answer shows cited policy sections.
+2. **Questionnaire:** Paste questions (one per line), or use the common-question suggestions; click **Generate draft answers**. Each answer shows cited policy sections. Results persist across refresh; use **Export to Word** or **Clear questionnaire** as needed.
+
+## Documentation
+
+- **[How the RAG pipeline works](docs/RAG-OVERVIEW.md)** – ingestion (chunking, embeddings), retrieval (similarity search), and generation (Claude + citations). For the curious.
 
 ## Data & privacy
 
